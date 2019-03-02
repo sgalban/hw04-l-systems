@@ -1,6 +1,8 @@
+import {vec3, mat4} from 'gl-matrix';
 import Turtle from './Turtle';
 import ExpansionRule from './ExpansionRule';
 import DrawingRule from './DrawingRule';
+import DrawNode from './DrawNode';
 
 export default class LSystem {
     private turtleHistory: Turtle[];                    // The stack of turtles used during drawing
@@ -49,9 +51,6 @@ export default class LSystem {
             if (!this.expansionRules.get(c)) {
                 this.expansionRules.set(c, ExpansionRule.selfRule(c));
             }
-            if (!this.drawingRules.get(c)) {
-                this.drawingRules.set(c, new DrawingRule(c, ()=>{}));
-            }
         }
     }
 
@@ -61,9 +60,6 @@ export default class LSystem {
             for (let c of pc) {
                 if (!this.expansionRules.get(c)) {
                     this.expansionRules.set(c, ExpansionRule.selfRule(c));
-                }
-                if (!this.drawingRules.get(c)) {
-                    this.drawingRules.set(c, new DrawingRule(c, ()=>{}));
                 }
             }
         }
@@ -94,19 +90,29 @@ export default class LSystem {
         return outString;
     }
 
-    draw(numIterations: number): void {
+    draw(numIterations: number): DrawNode[] {
+        let nodes: DrawNode[] = [];
         const expandedString = this.expand(numIterations);
         let curTurt: Turtle = new Turtle();
         for (let char of expandedString) {
-            let dr: DrawingRule = this.drawingRules.get(char);
-            dr.draw(curTurt);
             if (char === "[") {
-                this.turtleHistory.push(curTurt);
-                curTurt = curTurt.copy();
+                this.turtleHistory.push(curTurt.duplicate());
+                curTurt.recursionDepth++;
             }
             else if(char === "]") {
-                curTurt = this.turtleHistory.pop();
+                curTurt.copy(this.turtleHistory.pop());
+                curTurt.recursionDepth--;
+            }
+            else {
+                let dr: DrawingRule = this.drawingRules.get(char);
+                if (dr) {
+                    let dn: DrawNode = dr.draw(curTurt);
+                    if (!dn.isEmpty()) {
+                        nodes.push(dn);
+                    }
+                }
             }
         }
+        return nodes;
     }
 }
