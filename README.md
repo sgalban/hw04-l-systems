@@ -10,8 +10,8 @@ For this assignment, I generated a simple tree with spherical leaves. The timing
 The LSystem itself is only used when the scene is first loaded (or the user regenerates it), and therefore does not contribute to any frame drops afterwards. It consists of 8 characters: F, f, [, ], +, -, /, and *.
 - F draws a straight cylindrical branch 1.5 units in the direction of the turtle. When expanding, it has a (recursive) 25% chance of becoming even longer
 - f is identical to F, but the branch is only 0.5 units, and cannot expand further
-- B doesn't draw anything, but branches the turtle path. It can either form 2 or 3 more branches, the latter being slightly more likely
-- + and - reorient the turtle around the Z axis, in opposite directions. The angle is determined by the GUI controls. There is automatically a small random variation to this angle, which is proportional to that defined by the user
+- B branches the turtle path. It can either form 2 or 3 more branches, the latter being slightly more likely. Any characters remaining after the string expansion draw the leave spheres.
+- The + and - characters reorient the turtle around the Z axis, in opposite directions. The angle is determined by the GUI controls. There is automatically a small random variation to this angle, which is proportional to that defined by the user
 - / and * rotate the turtle along the Y axis. The base angle is always 120•, but there is a random variation determined by the input angle
 - [ and ] start and end branches, pushing and popping turtles of the stack. These are the only characters whose draw rules are "hardcoded" into the LSystem
 As the recursion gets deepeer, the branches also become thinner.
@@ -28,3 +28,4 @@ I added a small plane to act as the ground, and colored it with grass and patche
 The background uses the flat shader and finds the direction of the fragment ray in world space, similarly to the raymarching assignments. Using these rays, a cloudy sky is generated using more FBM. These clouds are animated using u_Time.
 
 ## Demo
+https://sgalban.github.io/hw04-l-systems/
