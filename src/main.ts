@@ -6,6 +6,9 @@ import Square from './geometry/Square';
 import ScreenQuad from './geometry/ScreenQuad';
 import Mesh from './geometry/Mesh';
 
+import cyl from './geometry/cylinder';
+import sph from './geometry/sphere';
+
 import OpenGLRenderer from './rendering/gl/OpenGLRenderer';
 import Camera from './Camera';
 import {setGL, readTextFile, mat4ToValues, randomRange} from './globals';
@@ -129,9 +132,9 @@ function loadScene() {
     square.create();
     screenQuad = new ScreenQuad();
     screenQuad.create();
-    cylinder = new Mesh(readTextFile("../cylinder.obj"), vec3.fromValues(0, 0, 0));
+    cylinder = new Mesh(cyl, vec3.fromValues(0, 0, 0));
     cylinder.create();
-    sphere = new Mesh(readTextFile('../sphere.obj'), vec3.fromValues(0, 0, 0));
+    sphere = new Mesh(sph, vec3.fromValues(0, 0, 0));
     sphere.create();
 
     generateLystem();

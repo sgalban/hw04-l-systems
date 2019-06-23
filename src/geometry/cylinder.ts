@@ -1,3 +1,4 @@
+let cyl = `
 # Blender v2.79 (sub 0) OBJ File: ''
 # www.blender.org
 mtllib cylinder.mtl
@@ -104,3 +105,6 @@ f 31//17 32//17 34//17 33//17
 f 1//1 33//1 3//1
 f 2//2 4//2 34//2
 f 33//18 34//18 4//18 3//18
+`
+
+export default cyl;

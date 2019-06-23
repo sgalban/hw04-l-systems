@@ -1,3 +1,4 @@
+let sph = `
 # Blender v2.79 (sub 0) OBJ File: ''
 # www.blender.org
 mtllib sphere.mtl
@@ -1509,3 +1510,6 @@ f 469//509 470//509 6//509 5//509
 f 472//510 471//510 7//510 8//510
 f 470//511 289//511 6//511
 f 471//512 464//512 479//512 7//512
+`
+
+export default sph;
